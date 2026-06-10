@@ -5,6 +5,7 @@ const cors = require("cors");
 
 // File Import
 const connectDB = require("./src/config/db.js");
+const errorMiddleware = require("./src/middleware/error.middleware.js");
 
 // Routes Import
 const healthRouter = require("./src/routes/health.route.js");
@@ -20,6 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/v1/health", healthRouter);
+
+//Global Error Middleware
+app.use(errorMiddleware);
 
 // DB Connection
 connectDB()
