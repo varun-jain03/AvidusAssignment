@@ -11,6 +11,7 @@ const errorMiddleware = require("./src/middleware/error.middleware.js");
 const healthRouter = require("./src/routes/health.route.js");
 const userRouter = require("./src/modules/users/user.routes.js");
 const authRouter = require("./src/modules/auth/auth.routes.js");
+const taskRouter = require("./src/modules/tasks/task.routes.js");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/health", healthRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/tasks", taskRouter);
 
 //Global Error Middleware
 app.use(errorMiddleware);
