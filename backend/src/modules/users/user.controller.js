@@ -7,6 +7,7 @@ const { getAllTheUsers } = require("./user.service.js");
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await getAllTheUsers();
 
+  console.log(req.user);
   return res.status(200).json(
     new ApiResponse(200, users, "Users Fetched SuccessFully...")
   );
