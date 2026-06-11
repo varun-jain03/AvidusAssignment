@@ -1,5 +1,4 @@
 // File Import
-const { deleteModel } = require("mongoose");
 const UserModel = require("./user.model.js");
 
 // Create A New User
