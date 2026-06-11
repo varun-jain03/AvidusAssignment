@@ -14,9 +14,11 @@ const registerUser = async (userData) => {
     throw new ApiError(409, "User Already Existing...")
   };
 
+  const saltRounds = Number(process.env.SALT_ROUNDS) || 10;
+
   const hashedPassword = await bcrypt.hash(
     userData.password,
-    Number(process.env.SALT_ROUNDS)
+    saltRounds
   );
 
   const user = await createUser({
