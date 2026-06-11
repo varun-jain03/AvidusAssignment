@@ -13,6 +13,7 @@ const userRouter = require("./src/modules/users/user.routes.js");
 const authRouter = require("./src/modules/auth/auth.routes.js");
 const taskRouter = require("./src/modules/tasks/task.routes.js");
 const activityRouter = require("./src/modules/activity/activity.routes.js");
+const analyticsRouter = require("./src/modules/analytics/analytics.routes.js");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/tasks", taskRouter);
 app.use("/api/v1/activity", activityRouter);
+app.use("/api/v1/analytics", analyticsRouter);
 
 //Global Error Middleware
 app.use(errorMiddleware);
