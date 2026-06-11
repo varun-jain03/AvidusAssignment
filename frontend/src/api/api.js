@@ -1,0 +1,1 @@
+export const BASE_URL = "https://avidusassignment.onrender.com/api/v1";
