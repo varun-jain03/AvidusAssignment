@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 // File Impory
 const { createUser, findUserByEmail, findUserById, getAllUsers, deleteUserById, updateUserStatus } = require("../users/user.repository.js");
 const ApiError = require("../../utils/ApiError.js");
+const { logActivity } = require("../activity/activity.service.js");
 
 // Registering A New User 
 const registerUser = async (userData) => {
@@ -47,7 +48,9 @@ const loginUser = async (email, password) => {
     role: user.role
   };
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
-  
+
+  await logActivity(user._id, "LOGIN", `${user.name} logged in`);
+
   return {
     token,
     user: {
