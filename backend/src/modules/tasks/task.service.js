@@ -1,10 +1,17 @@
 // File Imports
 const ApiError = require("../../utils/ApiError.js");
 const { createTask, getTaskById, getTasksByUserId, getAllTasks, updateTask, deleteTask } = require("./task.repository.js");
+const { logActivity } = require("../activity/activity.service.js");
 
 // Create a New Task
 const createNewTask = async (taskData, userId) => {
-  return await createTask({ ...taskData, createdBy: userId });
+  const task = await createTask({ ...taskData, createdBy: userId });
+  await logActivity(
+    userId,
+    "TASK_CREATED",
+    `Created task ${task.title}`
+  );
+  return task;
 };
 
 // Get All TAsks Created By User
@@ -27,7 +34,13 @@ const updateTasks = async (taskId, updatedData, user) => {
   if (task.createdBy.toString() !== user.userId && user.role !== "Admin") {
     throw new ApiError(403, "Access Denied...");
   };
-  return await updateTask(taskId, updatedData);
+  const updatedTask = await updateTask(taskId, updatedData);
+  await logActivity(
+    user.userId,
+    "TASK_UPDATED",
+    `Updated task ${updatedTask.title}`
+  );
+  return updatedTask;
 };
 
 // Deleting The Task
@@ -40,7 +53,12 @@ const deleteTasks = async (taskId, user) => {
   if (task.createdBy.toString() !== user.userId && user.role !== "Admin") {
     throw new ApiError(403, "Access denied...");
   }
-
+  
+  await logActivity(
+    user.userId,
+    "TASK_DELETED",
+    `Deleted task ${task.title}`
+  );
   await deleteTask(taskId);
 };
 
