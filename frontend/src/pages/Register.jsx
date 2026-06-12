@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 // file import
 import { registerUser } from "../redux/auth/authThunk";
-import "./Auth.css";
+import "../styles/Auth.css";
 
 function Register() {
   const dispatch = useDispatch();

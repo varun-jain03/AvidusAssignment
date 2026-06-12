@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk(
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message || data.massage);
       };
       return data;
     } 
@@ -45,7 +45,7 @@ export const loginUser = createAsyncThunk(
       );
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message || data.massage);
       }
       return data;
     } catch (error) {
