@@ -1,15 +1,16 @@
 // Dependencies
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 // File imports
-import { logout } from "../redux/auth/authSlice";
-import "./Navbar.css";
+import { logout } from "../redux/auth/authSlice.js";
+import "../styles/Navbar.css";
 
 function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  const isAdmin = user?.role === "Admin";
 
   const handleLogout = () => {
     dispatch(logout());
@@ -18,7 +19,29 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="logo">Task Manager</div>
+      <div className="nav-left">
+        <div className="logo">Task Manager</div>
+        <div className="nav-links">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
+            My Tasks
+          </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                isActive ? "nav-link active admin-link" : "nav-link admin-link"
+              }
+            >
+              Admin Panel
+            </NavLink>
+          )}
+        </div>
+      </div>
 
       <div className="nav-right">
         <div className="user-info">
