@@ -11,7 +11,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, token } = useSelector(
+  const { loading, error, token, user } = useSelector(
     (state) => state.auth
   );
 
@@ -21,10 +21,14 @@ function Login() {
   });
 
   useEffect(() => {
-    if (token) {
-      navigate("/");
+    if (token && user) {
+      if (user.role === "Admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     }
-  }, [token, navigate]);
+  }, [token, user, navigate]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
